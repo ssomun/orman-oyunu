@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orman Bilim Oyunu - 1. Görev</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    .message { margin-top: 20px; font-weight: bold; }
+    button { padding: 10px 15px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>İlk Göreve Hoşgeldin!</h1>
+  <p>Aşağıdaki soruları doğru cevaplayıp diğer göreve geçebilirsin.</p>
+
+  <form id="quizForm">
+    <fieldset>
+      <legend>1. Fotosentez için gerekli temel maddeler hangileridir? (Birden fazla seçebilirsiniz)</legend>
+      <input type="checkbox" name="q1" value="a" id="q1a" />
+      <label for="q1a">Karbondioksit</label><br />
+      <input type="checkbox" name="q1" value="b" id="q1b" />
+      <label for="q1b">Su</label><br />
+      <input type="checkbox" name="q1" value="c" id="q1c" />
+      <label for="q1c">Oksijen</label><br />
+      <input type="checkbox" name="q1" value="d" id="q1d" />
+      <label for="q1d">Güneş ışığı</label><br />
+      <input type="checkbox" name="q1" value="e" id="q1e" />
+      <label for="q1e">Azot</label>
+    </fieldset>
+
+    <br />
+
+    <fieldset>
+      <legend>2. Fotosentez sonucu bitkiler hangi maddeyi açığa çıkarır?</legend>
+      <input type="radio" name="q2" value="a" id="q2a" />
+      <label for="q2a">Oksijen</label><br />
+      <input type="radio" name="q2" value="b" id="q2b" />
+      <label for="q2b">Karbondioksit</label><br />
+      <input type="radio" name="q2" value="c" id="q2c" />
+      <label for="q2c">Su</label><br />
+      <input type="radio" name="q2" value="d" id="q2d" />
+      <label for="q2d">Metan</label>
+    </fieldset>
+
+    <br />
+
+    <fieldset>
+      <legend>3. Fotosentez hangi organelde gerçekleşir?</legend>
+      <input type="radio" name="q3" value="a" id="q3a" />
+      <label for="q3a">Mitokondri</label><br />
+      <input type="radio" name="q3" value="b" id="q3b" />
+      <label for="q3b">Kloroplast</label><br />
+      <input type="radio" name="q3" value="c" id="q3c" />
+      <label for="q3c">Çekirdek</label><br />
+      <input type="radio" name="q3" value="d" id="q3d" />
+      <label for="q3d">Ribozom</label>
+    </fieldset>
+
+    <br />
+    <button type="submit">Cevapları Kontrol Et</button>
+  </form>
+
+  <div id="result" class="message"></div>
+
+  <script>
+    const form = document.getElementById('quizForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // q1 için seçilen checkbox değerleri alınır
+      const q1Selected = Array.from(form.elements['q1'])
+        .filter(chk => chk.checked)
+        .map(chk => chk.value)
+        .sort()
+        .join(',');
+
+      // Doğru cevap: Karbondioksit(a), Su(b), Güneş ışığı(d)
+      const q1Correct = ['a', 'b', 'd'].sort().join(',');
+
+      // q2 için seçilen radyo buton
+      const q2Selected = form.elements['q2'].value;
+
+      // Doğru cevap: Oksijen (a)
+      const q2Correct = 'a';
+
+      // q3 için seçilen radyo buton
+      const q3Selected = form.elements['q3'].value;
+
+      // Doğru cevap: Kloroplast (b)
+      const q3Correct = 'b';
+
+      // Kontrol
+      if (q1Selected === q1Correct && q2Selected === q2Correct && q3Selected === q3Correct) {
+        resultDiv.textContent = "Tebrikler! Doğru cevapladın. Sırtını bu QR koda dayayıp 3 ağaç ilerle, ikinci görev seni bekliyor.";
+        resultDiv.style.color = 'green';
+      } else {
+        resultDiv.textContent = "Biraz daha dikkatli ol, tekrar dene.";
+        resultDiv.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>
