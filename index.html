@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orman Bilim Oyunu - 1. Görev</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 18px; max-width: 720px; margin: auto; line-height:1.45; }
+    h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    p.lead { margin-top:0; color:#333; }
+    fieldset { border:1px solid #ddd; padding:12px; margin-top:12px; border-radius:8px; }
+    legend { font-weight:600; }
+    .message { margin-top:18px; padding:10px; border-radius:6px; font-weight:600; display:inline-block; }
+    .ok { background:#e6ffea; color:#157a2e; border:1px solid #c3f0cf; }
+    .err { background:#ffecec; color:#a03; border:1px solid #f1c2c2; }
+    button { margin-top:14px; padding:10px 16px; font-size:16px; border-radius:6px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>İlk Göreve Hoşgeldin!</h1>
+  <p class="lead">Aşağıdaki soruları doğru cevaplayıp diğer göreve geçebilirsin. Tüm cevaplar doğru olana kadar tekrar deneyebilirsin — kimse elenmez 😊</p>
+
+  <form id="quizForm">
+    <fieldset>
+      <legend>1) Fotosentez için gerekli temel maddeler hangileridir? (Birden fazla seçilebilir)</legend>
+      <label><input type="checkbox" name="q1" value="a"> Karbondioksit</label><br>
+      <label><input type="checkbox" name="q1" value="b"> Su</label><br>
+      <label><input type="checkbox" name="q1" value="c"> Oksijen</label><br>
+      <label><input type="checkbox" name="q1" value="d"> Güneş ışığı</label><br>
+      <label><input type="checkbox" name="q1" value="e"> Azot</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>2) Fotosentez sonucu bitkiler hangi maddeyi açığa çıkarır?</legend>
+      <label><input type="radio" name="q2" value="a"> Oksijen</label><br>
+      <label><input type="radio" name="q2" value="b"> Karbondioksit</label><br>
+      <label><input type="radio" name="q2" value="c"> Su</label><br>
+      <label><input type="radio" name="q2" value="d"> Metan</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>3) Fotosentez hangi organelde gerçekleşir?</legend>
+      <label><input type="radio" name="q3" value="a"> Mitokondri</label><br>
+      <label><input type="radio" name="q3" value="b"> Kloroplast</label><br>
+      <label><input type="radio" name="q3" value="c"> Çekirdek</label><br>
+      <label><input type="radio" name="q3" value="d"> Ribozom</label>
+    </fieldset>
+
+    <button type="submit">Cevapları Kontrol Et</button>
+  </form>
+
+  <div id="result" aria-live="polite"></div>
+
+  <script>
+    const form = document.getElementById('quizForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // q1 seçilen checkboxlar
+      const q1Elems = Array.from(form.querySelectorAll('input[name="q1"]'));
+      const q1Selected = q1Elems.filter(ch => ch.checked).map(ch => ch.value).sort().join(',');
+
+      // doğru: a (Karbondioksit), b (Su), d (Güneş ışığı)
+      const q1Correct = ['a','b','d'].sort().join(',');
+
+      // q2 radyo
+      const q2 = (() => {
+        const el = form.querySelector('input[name="q2"]:checked');
+        return el ? el.value : '';
+      })();
+
+      // q3 radyo
+      const q3 = (() => {
+        const el = form.querySelector('input[name="q3"]:checked');
+        return el ? el.value : '';
+      })();
+
+      const q2Correct = 'a';
+      const q3Correct = 'b';
+
+      if (q1Selected === q1Correct && q2 === q2Correct && q3 === q3Correct) {
+        resultDiv.innerHTML = '<div class="message ok">Tebrikler! Doğru cevapladın. Sırtını bu QR koda dayayıp 3 ağaç ilerle, ikinci görev seni bekliyor.</div>';
+      } else {
+        resultDiv.innerHTML = '<div class="message err">Biraz daha dikkatli ol, tekrar dene.</div>';
+      }
+    });
+  </script>
+</body>
+</html>
